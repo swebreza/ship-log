@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ship log — MD Suweb Reza</title>
+<meta name="description" content="Six production SaaS verticals, 17 repositories, 1,350+ commits, 6 months. What was built, what it runs on, and what was actually hard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0B0C; --surface:#111113; --raise:#17171A;
+    --ink:#ECEAE5; --dim:#9C9A93; --faint:#6B6A65;
+    --rule:#242428; --rule-hi:#33333A;
+    --amber:#E9B44C; --amber-dim:#8A6C2B;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --serif:"Instrument Serif",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:15px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    font-variant-numeric:tabular-nums;
+  }
+  a{color:var(--amber);text-decoration:none;border-bottom:1px solid var(--amber-dim);transition:border-color .15s}
+  a:hover{border-bottom-color:var(--amber)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+  /* ---------- top bar ---------- */
+  .bar{
+    position:sticky;top:0;z-index:20;background:rgba(11,11,12,.86);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);
+  }
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:52px}
+  .bar b{font-family:var(--mono);font-weight:600;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+  .bar nav{display:flex;gap:20px;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .bar nav a{color:var(--dim);border:0}
+  .bar nav a:hover{color:var(--amber)}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:76px 0 0;border-bottom:1px solid var(--rule)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:22px}
+  h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(46px,8.2vw,92px);line-height:.98;letter-spacing:-.02em;margin:0 0 22px;
+  }
+  h1 em{font-style:italic;color:var(--amber)}
+  .thesis{font-size:clamp(16px,2vw,19px);line-height:1.55;max-width:62ch;color:var(--ink);margin:0 0 10px}
+  .thesis+.thesis{color:var(--dim);margin-bottom:44px}
+
+  /* ---------- stat band ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule)}
+  .stat{padding:24px 0 30px;border-right:1px solid var(--rule)}
+  .stat:last-child{border-right:0}
+  .stat .n{font-family:var(--mono);font-weight:500;font-size:clamp(28px,4.6vw,42px);line-height:1;letter-spacing:-.03em}
+  .stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+
+  /* ---------- section ---------- */
+  html{scroll-behavior:smooth}
+  section,footer{scroll-margin-top:52px}
+  section{padding:72px 0;border-bottom:1px solid var(--rule)}
+  .shead{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
+  .shead h2{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin:0}
+  .shead .rule{flex:1;height:1px;background:var(--rule)}
+  .sintro{color:var(--dim);max-width:64ch;margin:0 0 40px;font-size:14.5px}
+
+  /* ---------- product rows ---------- */
+  .row{
+    display:grid;grid-template-columns:44px 1fr 300px;gap:28px;
+    padding:30px 0;border-top:1px solid var(--rule);align-items:start;
+  }
+  .row:last-of-type{border-bottom:1px solid var(--rule)}
+  .idx{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:6px;letter-spacing:.08em}
+  .row h3{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.1;margin:0 0 4px;letter-spacing:-.01em}
+  .domain{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+  .row p{margin:0 0 16px;color:var(--dim);max-width:56ch;font-size:14.5px}
+  .hard{
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 14px;
+    font-size:14px;color:var(--ink);max-width:56ch;
+  }
+  .hard b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
+  .side{padding-top:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+  .chip{
+    font-family:var(--mono);font-size:11px;color:var(--dim);
+    border:1px solid var(--rule-hi);border-radius:2px;padding:3px 7px;white-space:nowrap;
+  }
+  .metrics{border-top:1px solid var(--rule);padding-top:12px}
+  .metric{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11.5px;padding:3px 0}
+  .metric span:first-child{color:var(--faint);letter-spacing:.08em;text-transform:uppercase;font-size:10.5px}
+  .metric span:last-child{color:var(--ink)}
+
+  /* ---------- war stories ---------- */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:28px}
+  .card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15;margin:0 0 20px;letter-spacing:-.01em}
+  .beat{border-top:1px solid var(--rule);padding:13px 0}
+  .beat:last-child{padding-bottom:0}
+  .beat b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px}
+  .beat p{margin:0;font-size:14px;color:var(--dim)}
+  .beat.win p{color:var(--ink)}
+  .big{font-family:var(--mono);font-size:26px;letter-spacing:-.02em;color:var(--amber);display:block;margin-bottom:4px}
+
+  /* ---------- also ---------- */
+  .also{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .mini{border-top:1px solid var(--rule);padding-top:16px}
+  .mini h4{font-family:var(--mono);font-size:13px;font-weight:600;margin:0 0 6px;letter-spacing:.02em}
+  .mini p{margin:0;font-size:13px;color:var(--dim);line-height:1.5}
+
+  /* ---------- verify ---------- */
+  .verify{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:26px 28px}
+  .verify p{margin:0 0 16px;color:var(--dim);font-size:14px;max-width:64ch}
+  pre{
+    margin:0;background:var(--bg);border:1px solid var(--rule);border-radius:3px;
+    padding:16px;overflow-x:auto;font-family:var(--mono);font-size:12px;color:var(--ink);line-height:1.7;
+  }
+  pre .c{color:var(--faint)}
+
+  /* ---------- footer ---------- */
+  footer{padding:66px 0 80px}
+  footer h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em}
+  footer .sub{color:var(--dim);margin:0 0 30px;max-width:52ch}
+  .links{display:flex;flex-wrap:wrap;gap:26px;font-family:var(--mono);font-size:13px}
+  .sig{margin-top:46px;padding-top:20px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.08em;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:900px){
+    .row{grid-template-columns:32px 1fr;gap:18px}
+    .side{grid-column:2}
+    .cards{grid-template-columns:1fr}
+    .also{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:620px){
+    .wrap{padding:0 20px}
+    header.hero{padding-top:52px}
+    .stats{grid-template-columns:1fr 1fr}
+    .stat{border-right:0;border-bottom:1px solid var(--rule);padding:20px 0 22px}
+    .stat:nth-child(odd){border-right:1px solid var(--rule);padding-right:18px}
+    .stat:nth-child(even){padding-left:18px}
+    .bar nav{display:none}
+    section{padding:52px 0}
+    .also{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <b>MD Suweb Reza</b>
+    <nav>
+      <a href="#built">Built</a>
+      <a href="#hard">Hard problems</a>
+      <a href="#verify">Verify</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Ship log · Mar to Aug 2026</div>
+    <h1>Six products.<br>One <em>engineer</em>.</h1>
+    <p class="thesis">I ship whole products alone, from data model to deployed URL to first user. Over the last six months that meant six production SaaS verticals: accounting, hiring, health tech, insurance, business identity and market intelligence.</p>
+    <p class="thesis">This page is the receipt. Every number below comes out of git, and the command that produces them is at the bottom.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">6</div><div class="l">Verticals</div></div>
+      <div class="stat"><div class="n">17</div><div class="l">Repositories</div></div>
+      <div class="stat"><div class="n">1,350</div><div class="l">Commits</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Months</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="built">
+  <div class="wrap">
+    <div class="shead"><h2>What I shipped</h2><div class="rule"></div></div>
+    <p class="sintro">Each of these went from an empty repository to something deployed and running. Backend, frontend, data model, infrastructure and the deploy pipeline, in every case.</p>
+
+    <div class="row">
+      <div class="idx">01</div>
+      <div>
+        <h3>Emireq</h3>
+        <div class="domain">Fintech · Accounting · Company formation</div>
+        <p>A startup and investor platform with a real financial core: double-entry accounting ledger, invoicing and chart of accounts, multi-jurisdiction company formation with KYC, investor and startup matching, and real-time messaging over WebSockets. One Django backend serving four separate React frontends.</p>
+        <div class="hard"><b>Hardest part</b>Keeping a double-entry ledger correct while the schema kept moving underneath it. Accounting is unforgiving: a rounding error or a half-written journal entry is a bug you find in production, from a customer.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">Django 5.2</span><span class="chip">DRF</span><span class="chip">Channels</span><span class="chip">Celery</span><span class="chip">React 19</span><span class="chip">PostgreSQL 16</span><span class="chip">Redis</span><span class="chip">Cloud Run</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Repos</span><span>5</span></div>
+          <div class="metric"><span>Commits</span><span>462</span></div>
+          <div class="metric"><span>Frontends</span><span>4</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="idx">02</div>
+      <div>
+        <h3>Hashtora</h3>
+        <div class="domain">Hiring · Applied AI</div>
+        <p>A hiring platform where the matching is the product. I built the AI engine on pgvector doing hybrid semantic candidate matching, plus resume parsing and AI copilots on Gemini. Also the candidate wallet (payment methods, transactions, withdrawals) and a hybrid Firebase and Django identity system with a custom email OTP flow.</p>
+        <div class="hard"><b>Hardest part</b>Making semantic matching return results a recruiter would actually trust. Pure vector similarity surfaces plausible nonsense, so the ranking had to be hybrid and the failure modes had to be visible rather than silent.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">Django</span><span class="chip">pgvector</span><span class="chip">Gemini</span><span class="chip">React</span><span class="chip">Firebase Auth</span><span class="chip">Meilisearch</span><span class="chip">PostgreSQL</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Repos</span><span>2</span></div>
+          <div class="metric"><span>Commits</span><span>298</span></div>
+          <div class="metric"><span>Surfaces</span><span>Web + API</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="idx">03</div>
+      <div>
+        <h3>Zymedics</h3>
+        <div class="domain">Health tech · Mobile</div>
+        <p>A patient app and the platform behind it: React Native on Expo for patients, a Django API, and a separate admin console for clinical staff. Google and email authentication through Firebase, video and voice consultation plumbing, and patient profiles carrying conditions and health goals.</p>
+        <div class="hard"><b>Hardest part</b>Auth across three surfaces that each trusted a different thing. Firebase owned identity on mobile, the backend stayed the system of record, and native builds meant every fix needed a full EAS rebuild before you could even see whether it worked.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">React Native</span><span class="chip">Expo</span><span class="chip">Django</span><span class="chip">Firebase Auth</span><span class="chip">Twilio</span><span class="chip">PostgreSQL</span><span class="chip">Cloud Run</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Repos</span><span>3</span></div>
+          <div class="metric"><span>Commits</span><span>290</span></div>
+          <div class="metric"><span>Platforms</span><span>iOS + Android + Web</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="idx">04</div>
+      <div>
+        <h3>Takafulik</h3>
+        <div class="domain">Insurance · Distribution</div>
+        <p>A takaful insurance platform serving three different audiences from one deployment: a consumer app for plans, enrollment and pools, a B2B corporate portal where companies create and manage takaful pools, and an internal staff portal for approvals, KYC review and claims. Nginx serves the SPA and proxies everything else to Gunicorn, so it ships as a single Cloud Run revision.</p>
+        <div class="hard"><b>Hardest part</b>Three audiences, one codebase, three completely different trust levels. A consumer, a corporate administrator and an internal claims reviewer cannot see the same data, and the authorization model has to hold that line everywhere.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">Django</span><span class="chip">PostgreSQL</span><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Nginx</span><span class="chip">Gunicorn</span><span class="chip">Docker</span><span class="chip">Cloud Run</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Portals</span><span>3</span></div>
+          <div class="metric"><span>Deploy</span><span>Single image</span></div>
+          <div class="metric"><span>Domain</span><span>Takaful</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="idx">05</div>
+      <div>
+        <h3>Credorz</h3>
+        <div class="domain">Business identity · Trust</div>
+        <p>A business trust and identity platform. Phase one was the identity foundation: authentication, a canonical company identifier, ultimate beneficial ownership mapping, role-based access control and an immutable event timeline. Next.js 16 monorepo end to end, TypeScript throughout.</p>
+        <div class="hard"><b>Hardest part</b>Ultimate beneficial ownership is a graph, not a field. Companies own companies that own companies, and you have to resolve real human beings at the end of that chain while keeping every step auditable.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">Next.js 16</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL</span><span class="chip">Prisma</span><span class="chip">RBAC</span><span class="chip">Monorepo</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Repos</span><span>1</span></div>
+          <div class="metric"><span>Commits</span><span>86</span></div>
+          <div class="metric"><span>Verified</span><span>End to end</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="idx">06</div>
+      <div>
+        <h3>DataZonn</h3>
+        <div class="domain">Market intelligence · Research</div>
+        <p>A private-market intelligence platform covering companies, startups, investors, markets, countries, valuations, risk, datasets and reports, with AI-assisted research on top. Real UAE manufacturing coverage, with demonstration data clearly labelled as such rather than quietly mixed in.</p>
+        <div class="hard"><b>Hardest part</b>Being honest about data provenance in the interface. It would have been easier to blend real and demonstration records into one convincing dataset. Keeping them visibly separate was the right call and made every query path harder.</div>
+      </div>
+      <div class="side">
+        <div class="chips"><span class="chip">Next.js 16</span><span class="chip">App Router</span><span class="chip">TypeScript</span><span class="chip">Tailwind 4</span><span class="chip">PostgreSQL 16</span></div>
+        <div class="metrics">
+          <div class="metric"><span>Repos</span><span>1</span></div>
+          <div class="metric"><span>Commits</span><span>37</span></div>
+          <div class="metric"><span>Entities</span><span>9 types</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hard">
+  <div class="wrap">
+    <div class="shead"><h2>Two things that were actually hard</h2><div class="rule"></div></div>
+    <p class="sintro">Shipping fast is easy to claim. These two are the ones I would want to be judged on, because both were live systems with real money moving through them and neither was solved by guessing.</p>
+    <div class="cards">
+
+      <div class="card">
+        <div class="tag">Performance · Accounting</div>
+        <h3>272 queries down to 7</h3>
+        <div class="beat">
+          <b>Symptom</b>
+          <p>The chart of accounts was the slowest screen in the accounting product. It felt broken rather than slow, and it was the screen finance users opened first.</p>
+        </div>
+        <div class="beat">
+          <b>Cause</b>
+          <p>A classic N+1 that had grown teeth. Every account pulled its own related rows, and the tree structure multiplied it. One page load meant 272 round trips to PostgreSQL.</p>
+        </div>
+        <div class="beat">
+          <b>Constraint</b>
+          <p>The account type column is a native Postgres enum, which rules out the bulk-create shortcut normally reached for here. The fix had to come from the read path itself.</p>
+        </div>
+        <div class="beat win">
+          <b>Result</b>
+          <span class="big">272 → 7</span>
+          <p>A 97% cut in queries. The slowest screen in the product became an instant one.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tag">Reliability · Financial core</div>
+        <h3>The pool that was never reused</h3>
+        <div class="beat">
+          <b>Symptom</b>
+          <p>Intermittent 500s in the live financial core. Not reproducible on demand, not tied to any one endpoint, and hitting the payments path.</p>
+        </div>
+        <div class="beat">
+          <b>Cause</b>
+          <p>Connection-pool exhaustion. Each request was taking two connections against a pool of fifteen, so a modest burst of concurrent traffic emptied it.</p>
+        </div>
+        <div class="beat">
+          <b>The counterintuitive part</b>
+          <p>Persistent connections are supposed to help. Under ASGI they were making it worse: every request lands on a fresh thread, so a connection is opened and never reused. I measured it rather than assuming, and reuse was exactly zero.</p>
+        </div>
+        <div class="beat win">
+          <b>Result</b>
+          <span class="big">Payments restored</span>
+          <p>An entire class of outage removed, and a setting that reads as an optimization everywhere else correctly identified as a leak in this one.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="also">
+  <div class="wrap">
+    <div class="shead"><h2>Also in the same window</h2><div class="rule"></div></div>
+    <p class="sintro">Not verticals of their own, but shipped and running in the same six months.</p>
+    <div class="also">
+      <div class="mini">
+        <h4>reza</h4>
+        <p>Open-source Python tool giving Claude, Cursor, Codex and Aider one shared project memory, so switching assistants stops meaning re-explaining the codebase.</p>
+      </div>
+      <div class="mini">
+        <h4>Attlas</h4>
+        <p>Turborepo running a Next.js 16 web app, an Expo 56 mobile app and a Django 5.2 API against one shared contract.</p>
+      </div>
+      <div class="mini">
+        <h4>Compleeq</h4>
+        <p>Django compliance API on Cloud Run, generating tailored policy drafts against ISO 27001 and NIST CSF 2.0.</p>
+      </div>
+      <div class="mini">
+        <h4>HiringTree</h4>
+        <p>My own company. Multilingual workforce mobility for frontline workers, agencies and employers across South Asia and the GCC.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="verify">
+  <div class="wrap">
+    <div class="shead"><h2>Verify the numbers</h2><div class="rule"></div></div>
+    <p class="sintro">Every figure on this page is counted, not estimated. Run this against the same set of repositories and you get the same answer.</p>
+    <div class="verify">
+      <p>Commit counts come straight out of git, filtered to my authorship, across all seventeen production repositories.</p>
+      <pre><span class="c"># commits authored by me, across every repo in the workspace</span>
+for d in */; do
+  [ -d "$d/.git" ] || continue
+  n=$(git -C "$d" log --author="swebreza" --oneline | wc -l)
+  echo "$n  $d"
+done | sort -rn
+
+<span class="c"># 1,350 commits · 17 repositories</span></pre>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Currently open to founding engineer<br>and senior full-stack roles.</h2>
+    <p class="sub">Remote. I work US, EU and GCC hours, on payroll or as a contractor. If a take-home would tell you less than a real task, I would rather do a paid trial.</p>
+    <div class="links">
+      <a href="mailto:swebreza@gmail.com">swebreza@gmail.com</a>
+      <a href="https://github.com/swebreza">github.com/swebreza</a>
+      <a href="https://linkedin.com/in/suwebreza">linkedin.com/in/suwebreza</a>
+      <a href="tel:+919538774092">+91 95387 74092</a>
+    </div>
+    <div class="sig">
+      <span>MD Suweb Reza · Bengaluru, India</span>
+      <span>Last updated August 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
